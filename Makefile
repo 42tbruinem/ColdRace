@@ -15,7 +15,7 @@ NAME = coldrace
 SRC =	main.c
 HEADER	=	./incl/coldrace.h \
 			./lib/libtrie/incl/libtrie.h \
-			./lib/gnl/get_next_line.h
+			./lib/gnl/incl/ft_get_next_line.h
 LIBRARY	=	./lib/libtrie/libtrie.a \
 			./lib/gnl/libgnl.a
 OBJ_DIR = ./obj

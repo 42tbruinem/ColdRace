@@ -1,4 +1,6 @@
-obj/
-coldrush
 prereq/
+coldrush
+obj/
 *.a
+*.o
+coldrace
