@@ -6,7 +6,7 @@
 #    By: tbruinem <tbruinem@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/12/14 14:25:31 by tbruinem      #+#    #+#                  #
-#    Updated: 2021/12/14 15:22:48 by tbruinem      ########   odam.nl          #
+#    Updated: 2021/12/14 15:49:55 by tbruinem      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,6 @@ $(NAME): $(OBJ) $(LIBRARY)
 
 clean:
 	rm -rf $(OBJ)
-	$(MAKE) -sC $(dir $(HEADER))
 
 fclean: clean
 	rm -rf $(NAME)
