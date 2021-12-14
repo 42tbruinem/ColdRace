@@ -1,55 +1,46 @@
-NAME = philo
 
-SRC_DIR = src/
-OBJ_DIR = obj/
-PREREQ_DIR = prereq/
-DEBUG_DIR = obj_debug/
-INCLUDE_DIRS = inc/
+# **************************************************************************** #
+#                                                                              #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: tbruinem <tbruinem@student.codam.nl>         +#+                      #
+#                                                    +#+                       #
+#    Created: 2021/12/14 14:25:31 by tbruinem      #+#    #+#                  #
+#    Updated: 2021/12/14 14:35:06 by tbruinem      ########   odam.nl          #
+#                                                                              #
+# **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -Werror -O3 -pthread -g
+NAME = coldrace
+SRC =	main.c
+HEADER	=	./incl/coldrace.h \
+			./lib/libtrie/incl/libtrie.h
+LIBRARY	=	./lib/libtrie/libtrie.a
+OBJ_DIR = ./obj
+SRC_DIR = ./src
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+INCL	:=	$(addprefix -I ,$(dir $(HEADER)))
 
-SOURCE_FILES = $(shell find $(SRC_DIR) -type f -name *.c)
+OBJ 	:=	$(SRC:%.c=$(OBJ_DIR)/%.o)
 
-OBJECTS = $(SOURCE_FILES:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
-PREREQS = $(SOURCE_FILES:$(SRC_DIR)%.c=$(PREREQ_DIR)%.d)
-
-CFLAGS += $(INCLUDE_DIRS:%=-I%)
-
-.PHONY: all
 all: $(NAME)
 
-include $(PREREQS)
+./lib/libtrie/libtrie.a:
+	@$(MAKE) -sC $(dir $@) DEBUG=$(DEBUG)
 
-$(NAME): $(OBJECTS) Makefile | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -o $@ $(OBJECTS)
+$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
+	@mkdir -p $(@D)
+	@echo "Compiling $(notdir $@)"
+	@$(CC) $(CFLAGS) -c $^ $(INCL) -o $@
 
-$(OBJECTS): Makefile | $(SRC_DIR) $(OBJ_DIR)
-	mkdir -p $(shell dirname $@)
-	$(CC) $(CFLAGS) -c -o $@ $(@:$(OBJ_DIR)%.o=$(SRC_DIR)%.c)
+$(NAME): $(OBJ) $(LIBRARY)
+	$(CC) $(CFLAGS) $(OBJECTS) $(INCL) -L ./lib/libtrie -ltrie -o $@ 
 
-$(OBJ_DIR) $(SRC_DIR) $(PREREQ_DIR):
-	mkdir $@
-
-# magic includes
-
-# make sure to delete the corrupted file in case of a error, since we will include that
-# and if its corrupted, the makefile will be "corrupted"
-
-.DELETE_ON_ERROR: $(PREREQS)
-$(PREREQS): $(PREREQ_DIR)%.d: $(SRC_DIR)%.c | $(PREREQ_DIR)
-	mkdir -p $(shell dirname $@)
-	printf "$(shell dirname $(patsubst $(PREREQ_DIR)%,$(OBJ_DIR)%,$@))/" > $@
-	$(CC) -MM $(patsubst $(PREREQ_DIR)%.d,$(SRC_DIR)%.c,$@) $(CFLAGS) >> $@
-
-# general management
-.PHONY: clean
 clean:
-	rm -rf $(OBJ_DIR)
-	rm -rf $(PREREQ_DIR)
+	rm -rf $(OBJ)
 
-.PHONY: fclean
-fclean: clean
-	rm -f $(NAME)
+fclean:
+	rm -rf $(NAME)
 
-.PHONY: re
-re: | fclean all
+re: fclean all
