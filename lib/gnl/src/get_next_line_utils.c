@@ -6,7 +6,7 @@
 /*   By: jsimonis <jsimonis@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/09 14:25:34 by jsimonis      #+#    #+#                 */
-/*   Updated: 2021/12/14 15:04:00 by jsimonis      ########   odam.nl         */
+/*   Updated: 2021/12/14 16:50:11 by tbruinem      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,25 @@
 **	we keep track of what buffer is for what fd
 **	Since we also have previous clearing out a single element is easy
 */
+
+static void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	size_t	i;
+	char	*d;
+	char	*s;
+
+	if (dst == src)
+		return (dst);
+	i = 0;
+	s = (char *)src;
+	d = (char *)dst;
+	while (i < n)
+	{
+		d[i] = s[i];
+		i++;
+	}
+	return (dst);
+}
 
 static t_gnl_ll	**get_gnl_ll(void)
 {
@@ -93,7 +112,7 @@ bool			increase_buffer_size(t_fd_data *data)
 	new = malloc(size);
 	if (new == NULL)
 		return (false);
-	memcpy(new, data->buffer, data->buff_end);
+	ft_memcpy(new, data->buffer, data->buff_end);
 	free(data->buffer);
 	data->buffer = new;
 	data->buff_size = size;

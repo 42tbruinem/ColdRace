@@ -6,7 +6,7 @@
 /*   By: jsimonis <jsimonis@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/09 14:24:54 by jsimonis      #+#    #+#                 */
-/*   Updated: 2021/12/14 15:03:36 by jsimonis      ########   odam.nl         */
+/*   Updated: 2021/12/14 16:50:40 by tbruinem      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,30 @@
 **	so that we "free" the data that we have already returned
 */
 
+static void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	size_t	i;
+	char	*d;
+	char	*s;
+
+	if (dst == src)
+		return (dst);
+	i = 0;
+	s = (char *)src;
+	d = (char *)dst;
+	while (i < n)
+	{
+		d[i] = s[i];
+		i++;
+	}
+	return (dst);
+}
+
 static void			collapse_buffer(t_fd_data *data)
 {
 	if (data->buff_inx == 0)
 		return ;
-	memcpy(data->buffer, &data->buffer[data->buff_inx],
+	ft_memcpy(data->buffer, &data->buffer[data->buff_inx],
 		data->buff_end - data->buff_inx);
 	data->buff_end -= data->buff_inx;
 	data->buff_inx = 0;
@@ -62,7 +81,7 @@ static t_gnl_out	buffer_to_line(t_fd_data *data, char **line, size_t length)
 	*line = malloc(length + 1);
 	if (*line == NULL)
 		return (gnl_err);
-	memcpy(*line, &data->buffer[data->buff_inx], length);
+	ft_memcpy(*line, &data->buffer[data->buff_inx], length);
 	(*line)[length] = '\0';
 	if (length + data->buff_inx >= data->buff_end)
 		return (gnl_eof);

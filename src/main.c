@@ -6,7 +6,7 @@
 /*   By: tbruinem <tbruinem@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 14:15:01 by tbruinem      #+#    #+#                 */
-/*   Updated: 2021/12/14 16:40:26 by tbruinem      ########   odam.nl         */
+/*   Updated: 2021/12/14 16:47:56 by tbruinem      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,14 @@
 #define KEY true
 #define VALUE false
 
+size_t	ft_strlen(char *str) {
+	size_t	i = 0;
+	while (str[i]) {
+		i++;
+	}
+	return i;
+}
+
 Trie*	get_storage(int fd) {
 	bool	type = KEY;
 	char	*key = NULL;
@@ -28,7 +36,7 @@ Trie*	get_storage(int fd) {
 
 	while ((res = get_next_line(fd, &line)) != -1) {
 		// Break if we encounter an empty line, end of storage mode
-		if (!strlen(line)) {
+		if (!ft_strlen(line)) {
 			break;
 		}
 		// Store the line as the 'key'
@@ -62,7 +70,7 @@ int main(void) {
 	}
 
 	while ((res = get_next_line(STDIN_FILENO, &line)) != -1) {
-		if (!strlen(line)) {
+		if (!ft_strlen(line)) {
 			break ;
 		}
 		char *found = trie_find_str(storage, line);

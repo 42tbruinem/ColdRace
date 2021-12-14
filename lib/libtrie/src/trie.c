@@ -6,14 +6,28 @@
 /*   By: tbruinem <tbruinem@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/18 17:19:57 by tbruinem      #+#    #+#                 */
-/*   Updated: 2021/12/14 15:31:00 by tbruinem      ########   odam.nl         */
+/*   Updated: 2021/12/14 16:49:02 by tbruinem      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libtrie.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <memory.h>
+
+void	*ft_memset(void *b, int c, size_t len)
+{
+	size_t			i;
+	unsigned char	*a;
+
+	a = (unsigned char *)b;
+	i = 0;
+	while (i < len)
+	{
+		a[i] = (unsigned char)c;
+		i++;
+	}
+	return (b);
+}
 
 Trie	*trie_new(void)
 {
@@ -22,7 +36,7 @@ Trie	*trie_new(void)
 	trie = malloc(sizeof(Trie));
 	if (!trie)
 		return (NULL);
-	memset(trie->connections, 0, TRIE_CONNECTION_AMOUNT * sizeof(Trie*));
+	ft_memset(trie->connections, 0, TRIE_CONNECTION_AMOUNT * sizeof(Trie*));
 	trie->end = false;
 	trie->value = NULL;
 	return (trie);
