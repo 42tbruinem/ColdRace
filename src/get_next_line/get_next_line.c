@@ -6,16 +6,14 @@
 /*   By: jsimonis <jsimonis@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/09 14:24:54 by jsimonis      #+#    #+#                 */
-/*   Updated: 2021/12/14 14:48:15 by jsimonis      ########   odam.nl         */
+/*   Updated: 2021/12/14 14:50:59 by jsimonis      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_get_next_line_int.h"
 #include "ft_get_next_line.h"
-#include "libft.h"
 #include <errno.h>
 #include <string.h>
-#include "ft_error.h"
 #include <stdio.h>
 
 /*
