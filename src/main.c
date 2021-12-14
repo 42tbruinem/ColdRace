@@ -6,7 +6,7 @@
 /*   By: tbruinem <tbruinem@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 14:15:01 by tbruinem      #+#    #+#                 */
-/*   Updated: 2021/12/14 16:59:50 by tbruinem      ########   odam.nl         */
+/*   Updated: 2021/12/14 17:27:40 by tbruinem      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,17 @@ Trie*	get_storage(int fd) {
 		}
 		// Store the line as the 'key'
 		if (type == KEY) {
-			free(key);
 			key = line;
 		}
 		// Insert the value at 'key'
 		else {
 			trie_insert(&storage, key, line);
+			free(key);
 		}
 		type = !type;
+	}
+	if (type == VALUE) {
+		free(key);
 	}
 	if (res == -1) {
 		trie_destroy(storage);
