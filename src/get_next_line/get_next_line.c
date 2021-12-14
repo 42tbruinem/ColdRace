@@ -6,7 +6,7 @@
 /*   By: jsimonis <jsimonis@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/09 14:24:54 by jsimonis      #+#    #+#                 */
-/*   Updated: 2021/01/29 17:30:55 by jsimonis      ########   odam.nl         */
+/*   Updated: 2021/12/14 14:48:15 by jsimonis      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,11 @@ static t_gnl_out	read_next_part(int fd, t_fd_data *data)
 		collapse_buffer(data);
 		if (data->buff_end + BUFFER_SIZE >= data->buff_size)
 			if (!increase_buffer_size(data))
-			{
-				set_error("Malloc failed in GNL!", false);
 				return (gnl_err);
-			}
 	}
 	read_chars = read(fd, &data->buffer[data->buff_end], BUFFER_SIZE);
 	if (read_chars == -1)
-	{
-		set_error(ft_strjoin("Read failed on file: ", strerror(errno)), true);
 		return (gnl_err);
-	}
 	data->buff_end += read_chars;
 	if (read_chars != BUFFER_SIZE)
 		return (gnl_eof);
@@ -69,10 +63,7 @@ static t_gnl_out	buffer_to_line(t_fd_data *data, char **line, size_t length)
 {
 	*line = malloc(length + 1);
 	if (*line == NULL)
-	{
-		set_error("Malloc failed in GNL!", false);
 		return (gnl_err);
-	}
 	ft_memcpy(*line, &data->buffer[data->buff_inx], length);
 	(*line)[length] = '\0';
 	if (length + data->buff_inx >= data->buff_end)
@@ -106,16 +97,10 @@ t_gnl_out			get_next_line(int fd, char **line)
 	*line = NULL;
 	fd_data = get_gnl_data(fd);
 	if (fd_data == NULL)
-	{
-		set_error("Malloc failed in GNL!", false);
 		return (gnl_err);
-	}
 	if (fd_data->buffer == NULL)
 		if (init_buffer(fd_data) == false)
-		{
-			set_error("Malloc failed in GNL!", false);
 			return (gnl_err);
-		}
 	out = read_line(fd, fd_data, line);
 	if (out == gnl_eof || out == gnl_err)
 		clear_gnl_data(fd);
