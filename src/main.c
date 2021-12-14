@@ -6,7 +6,7 @@
 /*   By: tbruinem <tbruinem@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 14:15:01 by tbruinem      #+#    #+#                 */
-/*   Updated: 2021/12/14 15:14:46 by tbruinem      ########   odam.nl         */
+/*   Updated: 2021/12/14 15:31:25 by tbruinem      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ int main(void) {
 	}
 
 	while (get_next_line(STDIN_FILENO, &line) != -1) {
+		if (!strlen(line)) {
+			break ;
+		}
 		char *found = trie_find_str(storage, line);
 		if (!found) {
 			printf("Could not find a 'value' for key '%s'\n", line);
@@ -52,6 +55,6 @@ int main(void) {
 			printf("%s\n", found);
 		}
 	}
-
+	trie_destroy(storage);
 	return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: tbruinem <tbruinem@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/18 17:19:57 by tbruinem      #+#    #+#                 */
-/*   Updated: 2021/06/21 23:28:36 by tbruinem      ########   odam.nl         */
+/*   Updated: 2021/12/14 15:31:00 by tbruinem      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	*trie_find_str(Trie *iter, char *keycode)
 		iter = *child;
 		i++;
 	}
+	if (!iter)
+		return NULL;
 	if (end_found(iter, key[i]) && iter->end)
 		return (iter->value);
 	return (NULL);

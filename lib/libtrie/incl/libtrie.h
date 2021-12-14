@@ -6,7 +6,7 @@
 /*   By: tbruinem <tbruinem@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/06/21 22:41:53 by tbruinem      #+#    #+#                 */
-/*   Updated: 2021/06/21 23:13:33 by tbruinem      ########   odam.nl         */
+/*   Updated: 2021/12/14 15:33:11 by tbruinem      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ struct			Trie
 	void*				value;
 };
 
-Trie	*trie_new(void);
-void	*trie_insert(Trie **root, char *key, void *val);
-void	*trie_find_str(Trie *iter, char *keycode);
-void	*trie_find_readchar(Trie *iter, ssize_t fd, int *ret);
-void	trie_destroy(Trie *trie);
+Trie		*trie_new(void);
+void		*trie_insert(Trie **root, char *key, void *val);
+void		*trie_find_str(Trie *iter, char *keycode);
+void		*trie_find_readchar(Trie *iter, ssize_t fd, int *ret);
+void		trie_destroy(Trie *trie);
+bool		end_found(Trie* trie, unsigned char key);
+Trie		*add_value_to_key(Trie* trie, void *val);
 
 #endif

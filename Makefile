@@ -6,7 +6,7 @@
 #    By: tbruinem <tbruinem@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/12/14 14:25:31 by tbruinem      #+#    #+#                  #
-#    Updated: 2021/12/14 15:10:56 by tbruinem      ########   odam.nl          #
+#    Updated: 2021/12/14 15:22:48 by tbruinem      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIBRARY	=	./lib/libtrie/libtrie.a \
 OBJ_DIR = ./obj
 SRC_DIR = ./src
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -O3
 
 ifeq ($(DEBUG),1)
 	CFLAGS += -g -fsanitize=address
@@ -48,6 +48,7 @@ $(NAME): $(OBJ) $(LIBRARY)
 
 clean:
 	rm -rf $(OBJ)
+	$(MAKE) -sC $(dir $(HEADER))
 
 fclean: clean
 	rm -rf $(NAME)
