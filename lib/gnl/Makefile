@@ -6,7 +6,7 @@ PREREQ_DIR = prereq/
 DEBUG_DIR = obj_debug/
 INCLUDE_DIRS = incl/
 
-CFLAGS = -Wall -Wextra -Werror -O3 -DBUFFER_SIZE=32
+CFLAGS = -Wall -Wextra -Werror -O3 -DBUFFER_SIZE=128
 
 SOURCE_FILES = $(shell find $(SRC_DIR) -type f -name *.c)
 

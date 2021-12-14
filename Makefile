@@ -12,7 +12,8 @@
 # **************************************************************************** #
 
 NAME = coldrace
-SRC =	main.c
+SRC =	main.c \
+		strlen.c
 HEADER	=	./incl/coldrace.h \
 			./lib/libtrie/incl/libtrie.h \
 			./lib/gnl/incl/ft_get_next_line.h

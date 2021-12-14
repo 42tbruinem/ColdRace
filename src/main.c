@@ -6,7 +6,7 @@
 /*   By: tbruinem <tbruinem@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 14:15:01 by tbruinem      #+#    #+#                 */
-/*   Updated: 2021/12/14 16:55:01 by jsimonis      ########   odam.nl         */
+/*   Updated: 2021/12/14 17:34:22 by jsimonis      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,6 @@
 
 #define KEY true
 #define VALUE false
-
-size_t	ft_strlen(char *str) {
-	size_t	i = 0;
-	while (str[i]) {
-		i++;
-	}
-	return i;
-}
 
 Trie*	get_storage(int fd) {
 	bool	type = KEY;

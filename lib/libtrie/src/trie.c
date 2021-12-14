@@ -6,28 +6,13 @@
 /*   By: tbruinem <tbruinem@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/18 17:19:57 by tbruinem      #+#    #+#                 */
-/*   Updated: 2021/12/14 16:49:02 by tbruinem      ########   odam.nl         */
+/*   Updated: 2021/12/14 17:01:57 by tbruinem      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libtrie.h>
 #include <stdlib.h>
 #include <unistd.h>
-
-void	*ft_memset(void *b, int c, size_t len)
-{
-	size_t			i;
-	unsigned char	*a;
-
-	a = (unsigned char *)b;
-	i = 0;
-	while (i < len)
-	{
-		a[i] = (unsigned char)c;
-		i++;
-	}
-	return (b);
-}
 
 Trie	*trie_new(void)
 {
