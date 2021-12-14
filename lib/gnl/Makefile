@@ -1,4 +1,4 @@
-NAME = gnl.a
+NAME = libgnl.a
 
 SRC_DIR = src/
 OBJ_DIR = obj/

@@ -1,3 +1,4 @@
 obj/
 coldrush
 prereq/
+*.a
