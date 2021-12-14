@@ -1,1 +1,1 @@
-./coldrace < inputs/random_inputs_bit_ridiculous | sample $(ps -A | grep -m1 '[c]oldrace' | awk '{print $1}') -f output.prof && filtercalltree output.prof
+sample coldrace 1000 1 -wait -mayDie -fullPaths -f output.prof | ./coldrace < "$@" > /dev/null && filtercalltree output.prof

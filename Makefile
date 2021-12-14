@@ -22,7 +22,7 @@ LIBRARY	=	./lib/libtrie/libtrie.a \
 OBJ_DIR = ./obj
 SRC_DIR = ./src
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -O3 -g
+CFLAGS = -Wall -Wextra -Werror -O3
 
 ifeq ($(DEBUG),1)
 	CFLAGS += -g -fsanitize=address
