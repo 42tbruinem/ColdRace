@@ -12,8 +12,14 @@
 # **************************************************************************** #
 
 NAME = coldrace
-SRC =	main.c \
-		strlen.c
+SRC =	strlen.c
+
+ifdef WITHBONUS
+SRC +=	main_bonus.c
+else
+SRC +=	main.c
+endif
+
 HEADER	=	./incl/coldrace.h \
 			./lib/libtrie/incl/libtrie.h \
 			./lib/gnl/incl/ft_get_next_line.h
@@ -33,6 +39,9 @@ INCL	:=	$(addprefix -I ,$(dir $(HEADER)))
 OBJ 	:=	$(SRC:%.c=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
+
+bonus:
+	$(MAKE) WITHBONUS=1 all
 
 ./lib/gnl/libgnl.a:
 	@$(MAKE) -sC $(dir $@) DEBUG=$(DEBUG)
