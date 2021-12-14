@@ -6,7 +6,7 @@
 /*   By: tbruinem <tbruinem@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 14:16:50 by tbruinem      #+#    #+#                 */
-/*   Updated: 2021/12/14 17:00:45 by tbruinem      ########   odam.nl         */
+/*   Updated: 2021/12/15 00:35:36 by jsimonis      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,4 +16,5 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+int main_with_fd(int fd);
 size_t	ft_strlen(const char *str);
