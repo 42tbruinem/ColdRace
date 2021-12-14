@@ -6,7 +6,7 @@
 /*   By: tbruinem <tbruinem@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 14:15:01 by tbruinem      #+#    #+#                 */
-/*   Updated: 2021/12/14 16:12:21 by tbruinem      ########   odam.nl         */
+/*   Updated: 2021/12/14 16:40:26 by tbruinem      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ Trie*	get_storage(int fd) {
 	bool	type = KEY;
 	char	*key = NULL;
 	int		res;
-	Trie*	storage = NULL;
+	Trie*	storage = trie_new();
 	char	*line = NULL;
 
 	while ((res = get_next_line(fd, &line)) != -1) {
