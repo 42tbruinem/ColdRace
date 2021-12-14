@@ -6,7 +6,7 @@
 /*   By: tbruinem <tbruinem@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 14:15:01 by tbruinem      #+#    #+#                 */
-/*   Updated: 2021/12/14 15:48:27 by tbruinem      ########   odam.nl         */
+/*   Updated: 2021/12/14 16:12:21 by tbruinem      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@
 #define KEY true
 #define VALUE false
 
-int main(void) {
-	Trie*	storage = trie_new();
-	char*	line = NULL;
+Trie*	get_storage(int fd) {
 	bool	type = KEY;
 	char	*key = NULL;
+	int		res;
+	Trie*	storage = NULL;
+	char	*line = NULL;
 
-	// Storage mode
-	while (get_next_line(STDIN_FILENO, &line) != -1) {
+	while ((res = get_next_line(fd, &line)) != -1) {
 		// Break if we encounter an empty line, end of storage mode
 		if (!strlen(line)) {
 			break;
@@ -42,8 +42,26 @@ int main(void) {
 		}
 		type = !type;
 	}
+	if (res == -1) {
+		trie_destroy(storage);
+		return NULL;
+	}
+	return storage;
+}
 
-	while (get_next_line(STDIN_FILENO, &line) != -1) {
+int main(void) {
+	Trie*	storage = trie_new();
+	char*	line = NULL;
+	int		res;
+
+	// Storage mode
+	storage = get_storage(STDIN_FILENO);
+	if (storage == NULL) {
+		printf("Error: error occured while reading storage\n");
+		return 1;
+	}
+
+	while ((res = get_next_line(STDIN_FILENO, &line)) != -1) {
 		if (!strlen(line)) {
 			break ;
 		}
@@ -54,6 +72,11 @@ int main(void) {
 		else {
 			printf("%s\n", found);
 		}
+	}
+	if (res == -1) {
+		printf("Error: error occured in search mode\n");
+		trie_destroy(storage);
+		return 1;
 	}
 	trie_destroy(storage);
 	return 0;
