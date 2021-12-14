@@ -6,7 +6,7 @@
 /*   By: tbruinem <tbruinem@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 14:15:01 by tbruinem      #+#    #+#                 */
-/*   Updated: 2021/12/15 00:52:43 by jsimonis      ########   odam.nl         */
+/*   Updated: 2021/12/15 00:54:15 by jsimonis      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #define KEY true
 #define VALUE false
 
-#define USE_TRIE
+//#define USE_TRIE
 
 #ifdef USE_TRIE
 #define Structure Trie
