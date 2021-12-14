@@ -1,12 +1,12 @@
-NAME = coldrace
+NAME = gnl.a
 
 SRC_DIR = src/
 OBJ_DIR = obj/
 PREREQ_DIR = prereq/
 DEBUG_DIR = obj_debug/
-INCLUDE_DIRS = inc/
+INCLUDE_DIRS = incl/
 
-CFLAGS = -Wall -Wextra -Werror -O3 -pthread -g
+CFLAGS = -Wall -Wextra -Werror -O3 -DBUFFER_SIZE=32
 
 SOURCE_FILES = $(shell find $(SRC_DIR) -type f -name *.c)
 
@@ -21,7 +21,8 @@ all: $(NAME)
 include $(PREREQS)
 
 $(NAME): $(OBJECTS) Makefile | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -o $@ $(OBJECTS)
+	#$(CC) $(CFLAGS) -o $@ $(OBJECTS)
+	ar -r -u $(NAME) $(OBJECTS)
 
 $(OBJECTS): Makefile | $(SRC_DIR) $(OBJ_DIR)
 	mkdir -p $(shell dirname $@)

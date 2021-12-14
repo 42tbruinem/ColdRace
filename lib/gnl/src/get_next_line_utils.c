@@ -6,12 +6,12 @@
 /*   By: jsimonis <jsimonis@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/09 14:25:34 by jsimonis      #+#    #+#                 */
-/*   Updated: 2021/01/26 17:37:27 by jsimonis      ########   odam.nl         */
+/*   Updated: 2021/12/14 15:04:00 by jsimonis      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_get_next_line_int.h"
-#include "libft.h"
+#include <string.h>
 
 /*
 **	Using a linked list with both a next and previous
@@ -93,7 +93,7 @@ bool			increase_buffer_size(t_fd_data *data)
 	new = malloc(size);
 	if (new == NULL)
 		return (false);
-	ft_memcpy(new, data->buffer, data->buff_end);
+	memcpy(new, data->buffer, data->buff_end);
 	free(data->buffer);
 	data->buffer = new;
 	data->buff_size = size;
