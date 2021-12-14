@@ -6,7 +6,7 @@
 #    By: tbruinem <tbruinem@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/06/21 23:18:21 by tbruinem      #+#    #+#                  #
-#    Updated: 2021/06/21 23:31:43 by tbruinem      ########   odam.nl          #
+#    Updated: 2021/12/14 17:06:13 by tbruinem      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,14 +15,14 @@ SRCDIR = src
 OBJDIR = obj
 INCDIR = incl
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -O3
 CPPFLAGS = -I $(INCDIR) 
 
 ifeq ($(DEBUG),1)
 	CFLAGS += -g -fsanitize=address
 endif
 
-OBJ =	trie.o
+OBJ =	trie.o memset.o
 OBJ :=	$(OBJ:%=$(OBJDIR)/%)
 
 all: $(NAME)

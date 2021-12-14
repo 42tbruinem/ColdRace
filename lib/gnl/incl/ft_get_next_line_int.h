@@ -6,7 +6,7 @@
 /*   By: jsimonis <jsimonis@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/09 14:25:36 by jsimonis      #+#    #+#                 */
-/*   Updated: 2021/01/31 16:27:48 by jsimonis      ########   odam.nl         */
+/*   Updated: 2021/12/14 17:04:03 by tbruinem      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ bool			clear_gnl_data(int fd);
 t_fd_data		*get_gnl_data(int fd);
 bool			increase_buffer_size(t_fd_data *data);
 bool			init_buffer(t_fd_data *data);
+void			*ft_memcpy(void *dst, const void *src, size_t n);
 
 #endif
