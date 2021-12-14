@@ -6,13 +6,15 @@
 /*   By: tbruinem <tbruinem@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 14:15:01 by tbruinem      #+#    #+#                 */
-/*   Updated: 2021/12/14 14:49:55 by tbruinem      ########   odam.nl         */
+/*   Updated: 2021/12/14 15:14:46 by tbruinem      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "coldrace.h"
+#include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 #define KEY true
 #define VALUE false
@@ -24,7 +26,7 @@ int main(void) {
 	char	*key = NULL;
 
 	// Storage mode
-	do {
+	while (get_next_line(STDIN_FILENO, &line) != -1) {
 		// Break if we encounter an empty line, end of storage mode
 		if (!strlen(line)) {
 			break;
@@ -37,13 +39,19 @@ int main(void) {
 		// Insert the value at 'key'
 		else {
 			trie_insert(&storage, key, line);
-			free(line);
 		}
 		type = !type;
 	}
-	while (get_next_line(STDIN_FILENO, &line) != -1);
 
-	// Search mode
+	while (get_next_line(STDIN_FILENO, &line) != -1) {
+		char *found = trie_find_str(storage, line);
+		if (!found) {
+			printf("Could not find a 'value' for key '%s'\n", line);
+		}
+		else {
+			printf("%s\n", found);
+		}
+	}
 
 	return 0;
 }
