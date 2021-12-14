@@ -6,7 +6,7 @@
 #    By: tbruinem <tbruinem@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/06/21 23:18:21 by tbruinem      #+#    #+#                  #
-#    Updated: 2021/12/14 17:06:13 by tbruinem      ########   odam.nl          #
+#    Updated: 2021/12/14 22:39:56 by tbruinem      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ ifeq ($(DEBUG),1)
 	CFLAGS += -g -fsanitize=address
 endif
 
-OBJ =	trie.o memset.o
+OBJ =	trie.o memset.o memory_pool.o
 OBJ :=	$(OBJ:%=$(OBJDIR)/%)
 
 all: $(NAME)

@@ -6,7 +6,7 @@
 /*   By: tbruinem <tbruinem@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 14:15:01 by tbruinem      #+#    #+#                 */
-/*   Updated: 2021/12/14 18:12:48 by tbruinem      ########   odam.nl         */
+/*   Updated: 2021/12/14 22:27:09 by tbruinem      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ Trie*	get_storage(int fd) {
 		free(key);
 	}
 	if (res == -1) {
-		trie_destroy(storage);
-		return NULL;
+		printf("Error: error occured while reading storage\n");
+		exit(1);
 	}
 	return storage;
 }
@@ -59,10 +59,6 @@ int main(void) {
 
 	// Storage mode
 	storage = get_storage(STDIN_FILENO);
-	if (storage == NULL) {
-		printf("Error: error occured while reading storage\n");
-		return 1;
-	}
 
 	while ((res = get_next_line(STDIN_FILENO, &line)) != -1) {
 		if (!ft_strlen(line)) {
@@ -75,12 +71,11 @@ int main(void) {
 		else {
 			printf("%s\n", found);
 		}
+		free(line);
 	}
 	if (res == -1) {
 		printf("Error: error occured in search mode\n");
-		trie_destroy(storage);
-		return 1;
+		exit(1);
 	}
-	trie_destroy(storage);
-	return 0;
+	exit(0);
 }

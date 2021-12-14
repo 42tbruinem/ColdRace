@@ -30,7 +30,8 @@ searches = []
 valid = []
 for _ in range(args.t):
 	if len(valid) < args.v and randrange(0,args.t) % 2 == 0:
-		remaining_valid_keys = [x for x in pairs if x[0] not in valid]
+		# remaining_valid_keys = [x for x in pairs if x[0] not in valid]
+		remaining_valid_keys = pairs
 		valid_key = choices(remaining_valid_keys)[0]
 		valid.append(valid_key[0])
 		searches.append(valid_key)
