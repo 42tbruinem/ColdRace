@@ -30,7 +30,7 @@ static int Hash(char* Key)
 	return Hash;
 }
 
-static void HashMap_Resize(HashMap* Map, int NewSize)
+void HashMap_Resize(HashMap* Map, int NewSize)
 {
 	NewSize = GetNextPrime(NewSize);
 
@@ -43,7 +43,7 @@ static void HashMap_Resize(HashMap* Map, int NewSize)
 	}
 
 	// Copy entries
-	memcpy(NewEntries, Map->Entries, sizeof(*NewEntries) * NewSize);
+	memcpy(NewEntries, Map->Entries, sizeof(*NewEntries) * Map->HashSize);
 
 	// Init buckets to -1
 	for (int i = 0; i < NewSize; i++)

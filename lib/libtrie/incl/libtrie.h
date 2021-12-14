@@ -6,7 +6,7 @@
 /*   By: tbruinem <tbruinem@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/06/21 22:41:53 by tbruinem      #+#    #+#                 */
-/*   Updated: 2021/12/14 17:02:13 by tbruinem      ########   odam.nl         */
+/*   Updated: 2021/12/14 22:33:40 by tbruinem      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ typedef struct Trie Trie;
 struct			Trie
 {
 	Trie*				connections[TRIE_CONNECTION_AMOUNT];
-	bool				end;
 	void*				value;
 };
 
@@ -33,5 +32,6 @@ void		*trie_find_readchar(Trie *iter, ssize_t fd, int *ret);
 void		trie_destroy(Trie *trie);
 void		*ft_memset(void *b, int c, size_t len);
 
+void*	get_memory(size_t type_size);
 
 #endif

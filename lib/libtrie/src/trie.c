@@ -6,7 +6,7 @@
 /*   By: tbruinem <tbruinem@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/18 17:19:57 by tbruinem      #+#    #+#                 */
-/*   Updated: 2021/12/14 17:01:57 by tbruinem      ########   odam.nl         */
+/*   Updated: 2021/12/14 22:51:57 by tbruinem      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ Trie	*trie_new(void)
 {
 	Trie	*trie;
 
-	trie = malloc(sizeof(Trie));
+	trie = get_memory(sizeof(Trie));
+	// trie = malloc(sizeof(Trie));
 	if (!trie)
 		return (NULL);
 	ft_memset(trie->connections, 0, TRIE_CONNECTION_AMOUNT * sizeof(Trie*));
-	trie->end = false;
 	trie->value = NULL;
 	return (trie);
 }
@@ -34,10 +34,9 @@ static bool	end_found(Trie* trie, unsigned char key)
 
 static Trie*	add_value_to_key(Trie* trie, void *val)
 {
-	if (trie->end)
+	if (trie->value)
 		free(trie->value);
 	trie->value = val;
-	trie->end = true;
 	return (trie);
 }
 
@@ -82,7 +81,7 @@ void	*trie_find_str(Trie *iter, char *keycode)
 	}
 	if (!iter)
 		return NULL;
-	if (end_found(iter, key[i]) && iter->end)
+	if (end_found(iter, key[i]) && iter->value)
 		return (iter->value);
 	return (NULL);
 }
@@ -94,7 +93,7 @@ void	*trie_find_readchar(Trie *iter, ssize_t fd, int *ret)
 
 	if (!ret)
 		ret = &read_bytes;
-	while (iter && !iter->end)
+	while (iter && !iter->value)
 	{
 		*ret = read(fd, &c, 1);
 		if (*ret == -1)
@@ -112,7 +111,7 @@ void	trie_destroy(Trie *trie)
 {
 	size_t	i = 0;
 
-	if (trie && trie->end)
+	if (trie && trie->value)
 		free(trie->value);
 	while (trie && i < TRIE_CONNECTION_AMOUNT)
 	{

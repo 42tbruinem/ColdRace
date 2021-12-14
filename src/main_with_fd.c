@@ -6,7 +6,7 @@
 /*   By: tbruinem <tbruinem@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 14:15:01 by tbruinem      #+#    #+#                 */
-/*   Updated: 2021/12/15 00:34:40 by jsimonis      ########   odam.nl         */
+/*   Updated: 2021/12/15 00:52:43 by jsimonis      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #define KEY true
 #define VALUE false
 
-//#define USE_TRIE
+#define USE_TRIE
 
 #ifdef USE_TRIE
 #define Structure Trie
@@ -44,6 +44,7 @@ Structure*	get_storage(int fd) {
 	while ((res = get_next_line(fd, &line)) != -1) {
 		// Break if we encounter an empty line, end of storage mode
 		if (!line[0]) {
+			free(line);
 			break;
 		}
 		// Store the line as the 'key'
@@ -80,11 +81,12 @@ int main_with_fd(int fd) {
 	storage = get_storage(fd);
 	if (storage == NULL) {
 		printf("Error: error occured while reading storage\n");
-		return 1;
+		exit(1);
 	}
 
 	while ((res = get_next_line(fd, &line)) != -1) {
 		if (!line[0]) {
+			free(line);
 			break ;
 		}
 		char *found = GetFunc(storage, line);
@@ -94,12 +96,13 @@ int main_with_fd(int fd) {
 		else {
 			printf("%s\n", found);
 		}
+		free(line);
 	}
 	if (res == -1) {
 		printf("Error: error occured in search mode\n");
 		FreeFunc(storage);
-		return 1;
+		exit(1);
 	}
 	FreeFunc(storage);
-	return 0;
+	exit(0);
 }
