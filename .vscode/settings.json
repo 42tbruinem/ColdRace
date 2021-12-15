@@ -1,7 +1,0 @@
-{
-	"files.associations": {
-		"get_next_line.h": "c",
-		"stdlib.h": "c",
-		"libtrie.h": "c"
-	}
-}
