@@ -22,9 +22,11 @@ def generate_pair():
 	value = "VALUE - " + generate_single(args.k)
 	return (key,value)
 
+pairs = []
 storage = dict()
 for _ in range(args.s):
 	key, value = generate_pair()
+	pairs.append((key,value))
 	storage[key] = value
 
 searches = []
@@ -45,7 +47,8 @@ for _ in range(args.t):
 input_content = ""
 output_content = ""
 
-for key,value in storage.items():
+for pair in pairs:
+	key, value = pair
 	input_content += key + "\n"
 	input_content += value + "\n"
 input_content += "\n"
