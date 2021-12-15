@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>	// temp for strcmp & memcpy
+//#include <string.h>	// temp for strcmp & memcpy
 
 #include "hashmap.h"
 
@@ -15,6 +15,22 @@ static int GetNextPrime(int Min)
 	// too large!
 	printf("Error:\nhash map too big!\n");
 	exit(1);
+}
+
+// cant use standards, so just do it yourself
+static int ft_strcmp(char* a, char* b)
+{
+	for (; a[0] != b[0] && a[0]; a++)
+		b++;
+	return a[0] - b[0];
+}
+
+static void ft_memcpy(void* dst, void* src, int chars)
+{
+	char* cdst = dst;
+	char* csrc = src;
+	for (int i = 0; i < chars; i++)
+		cdst[i] = csrc[i];
 }
 
 static int Hash(char* Key)
@@ -43,7 +59,7 @@ void HashMap_Resize(HashMap* Map, int NewSize)
 	}
 
 	// Copy entries
-	memcpy(NewEntries, Map->Entries, sizeof(*NewEntries) * Map->HashSize);
+	ft_memcpy(NewEntries, Map->Entries, sizeof(*NewEntries) * Map->HashSize);
 
 	// Init buckets to -1
 	for (int i = 0; i < NewSize; i++)
@@ -75,7 +91,7 @@ bool HashMap_Insert(HashMap* Map, char* Key, char* Value)
 
 	// Check for duplicates (can be removed if absolutely sure there will be none)
 	for (int i = Map->Buckets[TargetBucket]; i >= 0; i = Map->Entries[i].Next)
-		if (Map->Entries[i].HashCode == HashCode && strcmp(Map->Entries[i].Key, Key) == 0)
+		if (Map->Entries[i].HashCode == HashCode && ft_strcmp(Map->Entries[i].Key, Key))
 			return false;
 
 	// Get next empty entry
@@ -105,7 +121,7 @@ char* HashMap_Get(HashMap* Map, char* Key)
 	int TargetBucket = HashCode % Map->HashSize;
 
 	for (int i = Map->Buckets[TargetBucket]; i >= 0; i = Map->Entries[i].Next)
-		if (Map->Entries[i].HashCode == HashCode && strcmp(Map->Entries[i].Key, Key) == 0)
+		if (Map->Entries[i].HashCode == HashCode && ft_strcmp(Map->Entries[i].Key, Key) == 0)
 			return Map->Entries[i].Value;
 	return NULL;
 }

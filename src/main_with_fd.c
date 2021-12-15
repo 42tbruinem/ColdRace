@@ -6,7 +6,7 @@
 /*   By: tbruinem <tbruinem@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 14:15:01 by tbruinem      #+#    #+#                 */
-/*   Updated: 2021/12/15 00:54:15 by jsimonis      ########   odam.nl         */
+/*   Updated: 2021/12/15 00:57:07 by jsimonis      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #define Structure Trie
 #define CreateFunc trie_new
 #define FreeFunc trie_destroy
+//#define FreeFunc (void)
 #define GetFunc trie_find_str
 #else
 #define CreateFunc HashMap_New
