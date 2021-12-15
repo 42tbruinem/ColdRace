@@ -6,7 +6,7 @@
 /*   By: tbruinem <tbruinem@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 14:15:01 by tbruinem      #+#    #+#                 */
-/*   Updated: 2021/12/15 13:08:57 by jsimonis      ########   odam.nl         */
+/*   Updated: 2021/12/15 13:34:06 by tbruinem      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int main(void) {
 		}
 		char *found = HashMap_Get(storage, line);
 		if (!found) {
-			printf("%s: Not Found.\n", line);
+			printf("%s: Not found.\n", line);
 		}
 		else {
 			printf("%s\n", found);
