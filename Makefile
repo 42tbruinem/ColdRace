@@ -16,6 +16,8 @@ SRC =	strlen.c \
 		hashmap.c \
 		strcmp.c \
 		memcmp.c \
+		storage.c \
+		search.c \
 		min.c
 
 ifdef WITHBONUS
