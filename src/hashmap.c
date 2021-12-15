@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <limits.h>
-//#include <string.h>	// temp for strcmp & memcpy
 
+#include "util.h"
 #include "hashmap.h"
 
 // pre-computed primes at nice intervals
@@ -32,14 +32,6 @@ static int GetNextPrime(int Min)
 		if (IsPrime(i))	// might be a bit slow, but ehhh
 			return i;
 	return Min;
-}
-
-// cant use standards, so just do it yourself
-static int ft_strcmp(char* a, char* b)
-{
-	for (; a[0] != b[0] && a[0]; a++)
-		b++;
-	return a[0] - b[0];
 }
 
 static void ft_memcpy(void* dst, void* src, int chars)
@@ -108,7 +100,7 @@ bool HashMap_Insert(HashMap* Map, char* Key, char* Value)
 
 	// Check for duplicates (can be removed if absolutely sure there will be none)
 	for (int i = Map->Buckets[TargetBucket]; i >= 0; i = Map->Entries[i].Next)
-		if (Map->Entries[i].HashCode == HashCode && ft_strcmp(Map->Entries[i].Key, Key))
+		if (Map->Entries[i].HashCode == HashCode && ft_strcmp(Map->Entries[i].Key, Key) == 0)
 			return false;
 
 	// Get next empty entry

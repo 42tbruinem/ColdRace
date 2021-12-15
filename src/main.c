@@ -6,7 +6,7 @@
 /*   By: tbruinem <tbruinem@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 14:15:01 by tbruinem      #+#    #+#                 */
-/*   Updated: 2021/12/15 01:17:07 by tbruinem      ########   odam.nl         */
+/*   Updated: 2021/12/15 13:08:57 by jsimonis      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,12 @@ HashMap*	get_storage(int fd) {
 		}
 		// Insert the value at 'key'
 		else {
-			HashMap_Insert(storage, key, line);
+			if (!HashMap_Insert(storage, key, line))
+			{
+				//printf("duplicate key: %s\n", key);
+				free(key);
+				free(line);
+			}
 		}
 		type = !type;
 	}
