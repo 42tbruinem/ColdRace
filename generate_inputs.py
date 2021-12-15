@@ -57,7 +57,7 @@ for search in searches:
 	if search in storage:
 		output_content += storage[search] + "\n"
 	else:
-		output_content += search + ": Not Found.\n"
+		output_content += search + ": Not found.\n"
 input_content += "\n"
 
 with open(f"./inputs/{args.s}_{args.k}_{args.t}_{args.v}.input", 'w') as f:
