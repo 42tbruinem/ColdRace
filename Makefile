@@ -12,7 +12,7 @@
 # **************************************************************************** #
 
 NAME = coldrace
-SRC =	strlen.c hashmap.c main_with_fd.c
+SRC =	strlen.c hashmap.c
 
 ifdef WITHBONUS
 SRC +=	main_bonus.c
@@ -22,10 +22,8 @@ endif
 
 HEADER	=	./incl/coldrace.h \
 			./incl/hashmap.h \
-			./lib/libtrie/incl/libtrie.h \
 			./lib/gnl/incl/ft_get_next_line.h
-LIBRARY	=	./lib/libtrie/libtrie.a \
-			./lib/gnl/libgnl.a
+LIBRARY	=	./lib/gnl/libgnl.a
 OBJ_DIR = ./obj
 SRC_DIR = ./src
 CC = gcc
@@ -56,7 +54,7 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	@$(CC) $(CFLAGS) -c $^ $(INCL) -o $@
 
 $(NAME): $(OBJ) $(LIBRARY)
-	$(CC) $(CFLAGS) $(OBJ) $(INCL) -L ./lib/gnl -lgnl -L ./lib/libtrie -ltrie -o $@
+	$(CC) $(CFLAGS) $(OBJ) $(INCL) -L ./lib/gnl -lgnl -o $@
 
 clean:
 	rm -rf $(OBJ)
