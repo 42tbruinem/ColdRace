@@ -2,6 +2,8 @@
 # define HASHMAP_H
 
 #include <stdbool.h>
+#include <stddef.h>
+#include <sys/types.h>
 
 typedef struct {
 	int HashCode;	// -1 if unused, positive otherwise

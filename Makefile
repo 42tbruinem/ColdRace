@@ -12,7 +12,11 @@
 # **************************************************************************** #
 
 NAME = coldrace
-SRC =	strlen.c hashmap.c
+SRC =	strlen.c \
+		hashmap.c \
+		strcmp.c \
+		memcmp.c \
+		min.c
 
 ifdef WITHBONUS
 SRC +=	main_bonus.c
@@ -22,6 +26,7 @@ endif
 
 HEADER	=	./incl/coldrace.h \
 			./incl/hashmap.h \
+			./incl/util.h \
 			./lib/gnl/incl/ft_get_next_line.h
 LIBRARY	=	./lib/gnl/libgnl.a
 OBJ_DIR = ./obj

@@ -23,8 +23,7 @@ static bool IsPrime(int candidate)
 
 static int GetNextPrime(int Min)
 {
-	int i;
-	for (i = 0; Primes[i]; i++)
+	for (int i = 0; Primes[i]; i++)
 		if (Primes[i] >= Min)
 			return Primes[i];
 
@@ -162,7 +161,8 @@ HashMap* HashMap_New()
 		return NULL;
 	}
 
-	for (int i = 0; i < Map->HashSize; i++) Map->Buckets[i] = -1;
+	for (int i = 0; i < Map->HashSize; i++)
+		Map->Buckets[i] = -1;
 
 	return Map;
 }
