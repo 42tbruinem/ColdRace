@@ -1,4 +1,4 @@
-from argparse import ArgumentTypeError, ArgumentParser
+from argparse import ArgumentParser
 
 charset = [chr(x) for x in range(ord('A'), ord('~') + 1)]
 
@@ -27,7 +27,8 @@ storage = dict()
 for _ in range(args.s):
 	key, value = generate_pair()
 	pairs.append((key,value))
-	storage[key] = value
+	if key not in storage:
+		storage[key] = value
 
 searches = []
 valid = []

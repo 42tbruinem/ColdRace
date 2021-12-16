@@ -18,6 +18,7 @@ SRC =	strlen.c \
 		memcmp.c \
 		storage.c \
 		search.c \
+		memset.c \
 		min.c
 
 ifdef WITHBONUS

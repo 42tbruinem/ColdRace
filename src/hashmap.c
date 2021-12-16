@@ -7,31 +7,14 @@
 #include "hashmap.h"
 
 // pre-computed primes at nice intervals
-static const int Primes[] = { 3, 7, 11, 17, 23, 29, 37, 47, 59, 71, 89, 107, 131, 163, 197, 239, 293, 353, 431, 521, 631, 761, 919, 1103, 1327, 1597, 1931, 2333, 2801, 3371, 4049, 4861, 5839, 7013, 8419, 10103, 12143, 14591, 17519, 21023, 25229, 30293, 36353, 43627, 52361, 62851, 75431, 90523, 108631, 130363, 156437,  187751, 225307, 270371, 324449, 389357, 467237, 560689, 672827, 807403, 968897, 1162687, 1395263, 1674319, 2009191, 2411033, 2893249, 3471899, 4166287, 4999559, 5999471, 7199369, 0 };
-
-static bool IsPrime(int candidate)
+static const int primes[] = {2,5,11,23,47,97,197,397,797,1597,3203,6421,12853,25717,51437,102877,205759,411527,823117,1646237,3292489,6584983,13169977,26339969,52679969,105359939,210719881,421439783,842879579,1685759167};
+static int GetNextPrime(int min)
 {
-	if ((candidate & 1) != 0)
-	{
-		for (int divisor = 3; divisor * divisor <= candidate; divisor += 2)
-			if ((candidate % divisor) == 0)
-				return false;
-		return true;
-	}
-	return (candidate == 2);
-}
-
-static int GetNextPrime(int Min)
-{
-	for (int i = 0; Primes[i]; i++)
-		if (Primes[i] >= Min)
-			return Primes[i];
-
-	//ugh, too big, compute the hard way
-	for (int i = (Min | 1); i < INT_MAX; i+=2)
-		if (IsPrime(i))	// might be a bit slow, but ehhh
-			return i;
-	return Min;
+	static int i = 0;
+	for (; primes[i]; i++)
+		if (primes[i] >= min)
+			return primes[i];
+	return primes[i];
 }
 
 static void ft_memcpy(void* dst, void* src, int chars)
@@ -42,133 +25,111 @@ static void ft_memcpy(void* dst, void* src, int chars)
 		cdst[i] = csrc[i];
 }
 
-static int Hash(char* Key)
+static int hash(char* key)
 {
 	// Super simple, replace for better one later
-	int Hash = 17;
-	while (Key[0])
+	int hash = 17;
+	while (key[0])
 	{
-		Hash *= 21;
-		Hash ^= Key[0];
-		Key++;
+		hash *= 21;
+		hash ^= key[0];
+		key++;
 	}
-	return Hash;
+	return hash;
 }
 
-void HashMap_Resize(HashMap* Map, int NewSize)
+void HashMap_Resize(HashMap* map, int newSize)
 {
-	NewSize = GetNextPrime(NewSize);
+	newSize = GetNextPrime(newSize);
 
-	int* NewBuckets = malloc(sizeof(*Map->Buckets) * NewSize);
-	Entry* NewEntries = malloc(sizeof(*Map->Entries) * NewSize);
-	if (!NewBuckets || !NewEntries)
+	int* newBuckets = malloc(sizeof(*map->buckets) * newSize);
+	Entry* newEntries = malloc(sizeof(*map->entries) * newSize);
+	if (!newBuckets || !newEntries)
 	{
 		printf("Error:\nMalloc failure!\n");
 		exit(1);
 	}
 
 	// Copy entries
-	ft_memcpy(NewEntries, Map->Entries, sizeof(*NewEntries) * Map->HashSize);
+	ft_memcpy(newEntries, map->entries, sizeof(*newEntries) * map->hashSize);
 
-	// Init buckets to -1
-	for (int i = 0; i < NewSize; i++)
-		NewBuckets[i] = -1;
+	ft_memset(newBuckets, -1, sizeof(int) * newSize);
 
 	// Re-add all the entries to the buckets
-	for (int i = 0; i < Map->Count; i++)
+	for (int i = 0; i < map->count; i++)
 	{
-		int Bucket = NewEntries[i].HashCode % NewSize;
+		int Bucket = newEntries[i].hashCode % newSize;
 
 		// Add to front of linked list
-		NewEntries[i].Next = NewBuckets[Bucket];
-		NewBuckets[Bucket] = i;
+		newEntries[i].next = newBuckets[Bucket];
+		newBuckets[Bucket] = i;
 	}
 
-	free(Map->Buckets);
-	free(Map->Entries);
-	Map->Buckets = NewBuckets;
-	Map->Entries = NewEntries;
-	Map->HashSize = NewSize;
+	free(map->buckets);
+	free(map->entries);
+	map->buckets = newBuckets;
+	map->entries = newEntries;
+	map->hashSize = newSize;
 }
 
 // Returns true if it inserted successfully
 // False if it already existed
-bool HashMap_Insert(HashMap* Map, char* Key, char* Value)
+bool HashMap_Insert(HashMap* map, char* key, char* value)
 {
-	int HashCode = Hash(Key) & 0x7FFFFFFF;
-	int TargetBucket = HashCode % Map->HashSize;
+	int hashCode = hash(key) & 0x7FFFFFFF;
+	int targetBucket = hashCode % map->hashSize;
 
 	// Check for duplicates (can be removed if absolutely sure there will be none)
-	for (int i = Map->Buckets[TargetBucket]; i >= 0; i = Map->Entries[i].Next)
-		if (Map->Entries[i].HashCode == HashCode && ft_strcmp(Map->Entries[i].Key, Key) == 0)
+	for (int i = map->buckets[targetBucket]; i >= 0; i = map->entries[i].next)
+		if (map->entries[i].hashCode == hashCode && ft_strcmp(map->entries[i].key, key) == 0)
 			return false;
 
-	// Get next empty entry
-	if (Map->Count == Map->HashSize)	// Too little space, resize is needed
+	if (map->count == map->hashSize)	// Too little space, resize is needed
 	{
-		HashMap_Resize(Map, Map->Count * 2);
-		TargetBucket = HashCode % Map->HashSize;	// Also update the target bucket, HashSize changed
+		HashMap_Resize(map, map->count * 2);
+		targetBucket = hashCode % map->hashSize;	// Also update the target bucket, hashSize changed
 	}
-	int Index = Map->Count++;
+	int index = map->count++;
 
 	// Found entry, fill it with data!
-	Entry* Entry = &Map->Entries[Index];
-	Entry->HashCode = HashCode;
-	Entry->Key = Key;
-	Entry->Value = Value;
+	Entry* entry = map->entries + index;
+	entry->hashCode = hashCode;
+	entry->key = key;
+	entry->value = value;
 
 	// Add to start of linked list from the buckets array
-	Entry->Next = Map->Buckets[TargetBucket];
-	Map->Buckets[TargetBucket] = Index;
+	map->entries[index].next = map->buckets[targetBucket];
+	map->buckets[targetBucket] = index;
 
 	return true;	// Successfully inserted
 }
 
-char* HashMap_Get(HashMap* Map, char* Key)
+char* HashMap_Get(HashMap* map, char* key)
 {
-	int HashCode = Hash(Key) & 0x7FFFFFFF;
-	int TargetBucket = HashCode % Map->HashSize;
+	int hashCode = hash(key) & 0x7FFFFFFF;
+	int targetBucket = hashCode % map->hashSize;
 
-	for (int i = Map->Buckets[TargetBucket]; i >= 0; i = Map->Entries[i].Next)
-		if (Map->Entries[i].HashCode == HashCode && ft_strcmp(Map->Entries[i].Key, Key) == 0)
-			return Map->Entries[i].Value;
+	for (int i = map->buckets[targetBucket]; i >= 0; i = map->entries[i].next)
+		if (map->entries[i].hashCode == hashCode && ft_strcmp(map->entries[i].key, key) == 0)
+			return map->entries[i].value;
 	return NULL;
 }
 
 HashMap* HashMap_New()
 {
-	HashMap* Map = malloc(sizeof(HashMap));
-	if (!Map)
+	HashMap* map = malloc(sizeof(HashMap));
+	if (!map)
 		return NULL;
 
-	Map->Count = 0;
-	Map->HashSize = GetNextPrime(32);
-	Map->Buckets = malloc(sizeof(*Map->Buckets) * Map->HashSize);
-	Map->Entries = malloc(sizeof(Entry) * Map->HashSize);
+	map->count = 0;
+	map->hashSize = GetNextPrime(32);
+	map->buckets = malloc(sizeof(*map->buckets) * map->hashSize);
+	map->entries = malloc(sizeof(Entry) * map->hashSize);
 
-	if (!Map->Buckets || !Map->Entries)
-	{
-		free(Map->Buckets);
-		free(Map->Entries);
-		return NULL;
-	}
+	if (!map->buckets || !map->entries)
+		exit(1);
 
-	for (int i = 0; i < Map->HashSize; i++)
-		Map->Buckets[i] = -1;
+	ft_memset(map->buckets, -1, sizeof(int) * map->hashSize);
 
-	return Map;
-}
-
-void HashMap_Free(HashMap* Map)
-{
-	free(Map->Buckets);
-
-	for (int i = 0; i < Map->Count; i++)
-	{
-		free(Map->Entries[i].Key);
-		free(Map->Entries[i].Value);
-	}
-
-	free(Map->Entries);
-	free(Map);
+	return map;
 }
